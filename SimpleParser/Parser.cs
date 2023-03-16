@@ -3,8 +3,8 @@ using System;
 namespace SimpleParser;
 
 class Parser{
-    private static StreamReader _streamReader;
-    private static SymbolTable _symbolTable;
+    private readonly StreamReader _streamReader;
+    private readonly SymbolTable _symbolTable;
     private int lookahead;
     internal Parser(StreamReader streamReader, SymbolTable symbolTable){
         _streamReader = streamReader;
@@ -90,11 +90,11 @@ class Parser{
                 Match(lookahead);               
             }
             Token t = new Token(){
-                Name = "Id" + _symbolTable.Table.Count.ToString(),
+                Name = "Word",
                 Value = value
             };
             _symbolTable.Table.Add(t);
-            Console.Write(t.Name + " ");
+            Console.Write(t.Name + "." + t.Value + " ");
         }
         else if(Char.IsDigit((char)lookahead)){//num
             string value = string.Empty;
@@ -105,7 +105,7 @@ class Parser{
             
             Token t = new Token(){
                 Name = "Num",
-                Value = value.ToString()
+                Value = value
             };
             _symbolTable.Table.Add(t);
             Console.Write(t.Name + "." + t.Value + " ");
