@@ -1,0 +1,15 @@
+C:\Users\mesqu\OneDrive\Ambiente de Trabalho\UAB\Compilação\Code\AF1\SimpleParser\bin\Debug\net7.0\SimpleParser.exe
+C:\Users\mesqu\OneDrive\Ambiente de Trabalho\UAB\Compilação\Code\AF1\SimpleParser\bin\Debug\net7.0\SimpleParser.deps.json
+C:\Users\mesqu\OneDrive\Ambiente de Trabalho\UAB\Compilação\Code\AF1\SimpleParser\bin\Debug\net7.0\SimpleParser.runtimeconfig.json
+C:\Users\mesqu\OneDrive\Ambiente de Trabalho\UAB\Compilação\Code\AF1\SimpleParser\bin\Debug\net7.0\SimpleParser.dll
+C:\Users\mesqu\OneDrive\Ambiente de Trabalho\UAB\Compilação\Code\AF1\SimpleParser\bin\Debug\net7.0\SimpleParser.pdb
+C:\Users\mesqu\OneDrive\Ambiente de Trabalho\UAB\Compilação\Code\AF1\SimpleParser\obj\Debug\net7.0\SimpleParser.csproj.AssemblyReference.cache
+C:\Users\mesqu\OneDrive\Ambiente de Trabalho\UAB\Compilação\Code\AF1\SimpleParser\obj\Debug\net7.0\SimpleParser.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mesqu\OneDrive\Ambiente de Trabalho\UAB\Compilação\Code\AF1\SimpleParser\obj\Debug\net7.0\SimpleParser.AssemblyInfoInputs.cache
+C:\Users\mesqu\OneDrive\Ambiente de Trabalho\UAB\Compilação\Code\AF1\SimpleParser\obj\Debug\net7.0\SimpleParser.AssemblyInfo.cs
+C:\Users\mesqu\OneDrive\Ambiente de Trabalho\UAB\Compilação\Code\AF1\SimpleParser\obj\Debug\net7.0\SimpleParser.csproj.CoreCompileInputs.cache
+C:\Users\mesqu\OneDrive\Ambiente de Trabalho\UAB\Compilação\Code\AF1\SimpleParser\obj\Debug\net7.0\SimpleParser.dll
+C:\Users\mesqu\OneDrive\Ambiente de Trabalho\UAB\Compilação\Code\AF1\SimpleParser\obj\Debug\net7.0\refint\SimpleParser.dll
+C:\Users\mesqu\OneDrive\Ambiente de Trabalho\UAB\Compilação\Code\AF1\SimpleParser\obj\Debug\net7.0\SimpleParser.pdb
+C:\Users\mesqu\OneDrive\Ambiente de Trabalho\UAB\Compilação\Code\AF1\SimpleParser\obj\Debug\net7.0\SimpleParser.genruntimeconfig.cache
+C:\Users\mesqu\OneDrive\Ambiente de Trabalho\UAB\Compilação\Code\AF1\SimpleParser\obj\Debug\net7.0\ref\SimpleParser.dll
