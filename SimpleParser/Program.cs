@@ -7,7 +7,8 @@ class Program{
                 using(FileStream stream = File.Open(args[0], FileMode.Open, FileAccess.Read, FileShare.None)){
                     try{
                         StreamReader reader = new StreamReader(stream);
-                        Parser parser = new Parser(reader);
+                        SymbolTable symbolTable = new();
+                        Parser parser = new Parser(reader, symbolTable);
                         parser.Expression();
 
                         Console.WriteLine();

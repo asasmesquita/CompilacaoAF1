@@ -1,13 +1,17 @@
+using System;
+
 namespace SimpleParser;
 
 class Parser{
     private static StreamReader _streamReader;
+    private static SymbolTable _symbolTable;
     private int lookahead;
-    internal Parser(StreamReader streamReader){
+    internal Parser(StreamReader streamReader, SymbolTable symbolTable){
         _streamReader = streamReader;
         if(!_streamReader.EndOfStream){
             lookahead = _streamReader.Read();
         }
+        _symbolTable = symbolTable;
     }
 
     internal void Expression(){
@@ -19,12 +23,12 @@ class Parser{
                     if(lookahead == '+'){
                         Match('+');
                         Term();
-                        Console.Write('+');
+                        Console.Write('+' + " ");
                     }
                     else if(lookahead == '-'){
                         Match('-');
                         Term();
-                        Console.Write('-');
+                        Console.Write('-' + " ");
                     }
                     else{
                         return;
@@ -37,12 +41,12 @@ class Parser{
                     if(lookahead == '+'){
                         Match('+');
                         Term();
-                        Console.Write('+');
+                        Console.Write('+' + " ");
                     }
                     else if(lookahead == '-'){
                         Match('-');
                         Term();
-                        Console.Write('-');
+                        Console.Write('-' + " ");
                     }
                     else{
                         return;
@@ -65,12 +69,12 @@ class Parser{
         if(lookahead == '*'){
             Match('*');
             Factor();
-            Console.Write('*');
+            Console.Write('*' + " ");
             }
         else if(lookahead == '/'){
             Match('/');
             Factor();
-            Console.Write('/');
+            Console.Write('/' + " ");
         }
         else{
             return;
@@ -79,9 +83,32 @@ class Parser{
 
 
     private void Factor(){
-        if(Char.IsDigit((char)lookahead) || Char.IsAsciiLetter((char)lookahead)){
-            Console.Write((char)lookahead);
-            Match(lookahead);
+        if(Char.IsAsciiLetter((char)lookahead)){//id
+            string value = string.Empty;
+            while(Char.IsAsciiLetter((char)lookahead)){
+                value += (char)lookahead;
+                Match(lookahead);               
+            }
+            Token t = new Token(){
+                Name = "Id" + _symbolTable.Table.Count.ToString(),
+                Value = value
+            };
+            _symbolTable.Table.Add(t);
+            Console.Write(t.Name + " ");
+        }
+        else if(Char.IsDigit((char)lookahead)){//num
+            string value = string.Empty;
+            while(Char.IsDigit((char)lookahead)){
+                value += (char)lookahead;
+                Match(lookahead);               
+            }
+            
+            Token t = new Token(){
+                Name = "Num",
+                Value = value.ToString()
+            };
+            _symbolTable.Table.Add(t);
+            Console.Write(t.Name + "." + t.Value + " ");
         }
         else{
             throw new Exception("Syntax error");
