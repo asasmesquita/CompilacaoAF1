@@ -32,7 +32,25 @@ class Parser{
     }
 
     private void Term(){
-        if(Char.IsDigit(((char)lookahead))){
+        Factor();
+        if(lookahead == '*'){
+            Match('*');
+            Factor();
+            Console.Write('*');
+            }
+        else if(lookahead == '/'){
+            Match('/');
+            Factor();
+            Console.Write('/');
+        }
+        else{
+            return;
+        }
+    }
+
+
+    private void Factor(){
+        if(Char.IsDigit((char)lookahead) || Char.IsAsciiLetter((char)lookahead)){
             Console.Write((char)lookahead);
             Match(lookahead);
         }
@@ -40,7 +58,6 @@ class Parser{
             throw new Exception("Syntax error");
         }
     }
-
 
     private void Match(int token){
         if(lookahead == token){
