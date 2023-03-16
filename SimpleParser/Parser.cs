@@ -12,27 +12,56 @@ class Parser{
 
     internal void Expression(){
         while(!_streamReader.EndOfStream){
-            Term();
-            while(true){
-                if(lookahead == '+'){
-                    Match('+');
-                    Term();
-                    Console.Write('+');
-                }
-                else if(lookahead == '-'){
-                    Match('-');
-                    Term();
-                    Console.Write('-');
-                }
-                else{
-                    return;
+            if(lookahead == '('){
+                Match('(');
+                Term();
+                while(lookahead != ')'){
+                    if(lookahead == '+'){
+                        Match('+');
+                        Term();
+                        Console.Write('+');
+                    }
+                    else if(lookahead == '-'){
+                        Match('-');
+                        Term();
+                        Console.Write('-');
+                    }
+                    else{
+                        return;
+                    }
                 }
             }
+            else{
+                Term();
+                while(true){
+                    if(lookahead == '+'){
+                        Match('+');
+                        Term();
+                        Console.Write('+');
+                    }
+                    else if(lookahead == '-'){
+                        Match('-');
+                        Term();
+                        Console.Write('-');
+                    }
+                    else{
+                        return;
+                    }
+                }
+            }
+            
         }
     }
 
     private void Term(){
-        Factor();
+        bool closedTerm = false;
+        if(lookahead == ')'){
+            Match(')');
+            closedTerm = true;
+        }
+        if(!closedTerm){
+            Factor();
+        }
         if(lookahead == '*'){
             Match('*');
             Factor();
