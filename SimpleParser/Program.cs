@@ -13,6 +13,7 @@ class Program{
                         Console.WriteLine();
                         Console.WriteLine("Parsing operation terminated with success");
                         Console.WriteLine();
+                        SyntaxTree syntaxTree = new SyntaxTree(parser.parsedText);
                     }
                     catch(Exception e){
                         Console.WriteLine("Error: cannot open file");
