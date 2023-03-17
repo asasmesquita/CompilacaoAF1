@@ -6,6 +6,7 @@ class Parser{
     private readonly StreamReader _streamReader;
     private readonly SymbolTable _symbolTable;
     private int lookahead;
+    public string parsedText = string.Empty;
     internal Parser(StreamReader streamReader, SymbolTable symbolTable){
         _streamReader = streamReader;
         if(!_streamReader.EndOfStream){
@@ -22,11 +23,13 @@ class Parser{
                     Match('+');
                     Term();
                     Console.Write('+' + " ");
+                    parsedText += "+ ";
                 }
                 else if(lookahead == '-'){
                     Match('-');
                     Term();
                     Console.Write('-' + " ");
+                    parsedText += "- ";
                 }
                 else{
                     return;
@@ -41,11 +44,13 @@ class Parser{
             Match('*');
             Factor();
             Console.Write('*' + " ");
+            parsedText += "* ";
             }
         else if(lookahead == '/'){
             Match('/');
             Factor();
             Console.Write('/' + " ");
+            parsedText += "/ ";
         }
         else{
             return;
@@ -65,7 +70,9 @@ class Parser{
                 Value = value
             };
             _symbolTable.Table.Add(t);
-            Console.Write(t.Name + "." + t.Value + " ");
+            //Console.Write(t.Name + "." + t.Value + " ");
+            Console.Write(t.Value + " ");
+            parsedText += t.Value + " ";
         }
         else if(Char.IsDigit((char)lookahead)){//num
             string value = string.Empty;
@@ -79,7 +86,9 @@ class Parser{
                 Value = value
             };
             _symbolTable.Table.Add(t);
-            Console.Write(t.Name + "." + t.Value + " ");
+            //Console.Write(t.Name + "." + t.Value + " ");
+            Console.Write(t.Value + " ");
+            parsedText += t.Value + " ";
         }
         else if(lookahead == '('){
             Match('(');

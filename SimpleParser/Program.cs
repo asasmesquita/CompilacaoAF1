@@ -10,9 +10,9 @@ class Program{
                         SymbolTable symbolTable = new();
                         Parser parser = new Parser(reader, symbolTable);
                         parser.Expression();
-
                         Console.WriteLine();
-                        Console.WriteLine("Operation terminated with success");
+                        Console.WriteLine("Parsing operation terminated with success");
+                        Console.WriteLine();
                     }
                     catch(Exception e){
                         Console.WriteLine("Error: cannot open file");
