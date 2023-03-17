@@ -1,10 +1,18 @@
 namespace SimpleParser;
 
-internal class SyntaxTree{
-    private readonly Token _head;
+internal class SyntaxStack{
+    private readonly Stack<Node> _root;
 
-    public SyntaxTree(Token token){
-        this._head = token;
+    internal SyntaxStack(Node root){
+        this._root = new();
+    }
+
+    internal void PrintStack(){
+        
+    }
+
+    internal void AddNode(Node parentNode, Node newNode){
+
     }
 
 }

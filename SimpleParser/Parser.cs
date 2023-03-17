@@ -16,56 +16,27 @@ class Parser{
 
     internal void Expression(){
         while(!_streamReader.EndOfStream){
-            if(lookahead == '('){
-                Match('(');
-                Term();
-                while(lookahead != ')'){
-                    if(lookahead == '+'){
-                        Match('+');
-                        Term();
-                        Console.Write('+' + " ");
-                    }
-                    else if(lookahead == '-'){
-                        Match('-');
-                        Term();
-                        Console.Write('-' + " ");
-                    }
-                    else{
-                        return;
-                    }
+            Term();
+            while(true){
+                if(lookahead == '+'){
+                    Match('+');
+                    Term();
+                    Console.Write('+' + " ");
+                }
+                else if(lookahead == '-'){
+                    Match('-');
+                    Term();
+                    Console.Write('-' + " ");
+                }
+                else{
+                    return;
                 }
             }
-            else{
-                Term();
-                while(true){
-                    if(lookahead == '+'){
-                        Match('+');
-                        Term();
-                        Console.Write('+' + " ");
-                    }
-                    else if(lookahead == '-'){
-                        Match('-');
-                        Term();
-                        Console.Write('-' + " ");
-                    }
-                    else{
-                        return;
-                    }
-                }
-            }
-            
         }
     }
 
     private void Term(){
-        bool closedTerm = false;
-        if(lookahead == ')'){
-            Match(')');
-            closedTerm = true;
-        }
-        if(!closedTerm){
-            Factor();
-        }
+        Factor();
         if(lookahead == '*'){
             Match('*');
             Factor();
@@ -109,6 +80,16 @@ class Parser{
             };
             _symbolTable.Table.Add(t);
             Console.Write(t.Name + "." + t.Value + " ");
+        }
+        else if(lookahead == '('){
+            Match('(');
+            Expression();
+            if(lookahead == ')'){
+                Match(lookahead);
+            }
+            else{
+                throw new Exception("Syntax error");
+            }
         }
         else{
             throw new Exception("Syntax error");
