@@ -15,7 +15,7 @@ class Program{
                         Console.WriteLine(": - Syntax analysis operation terminated with success");
                     }
                     catch(Exception e){
-                        Console.WriteLine("Error: cannot open file");
+                        Console.WriteLine("Error: Parsing or Syntax error");
                         Console.WriteLine(e.Message);
                     }  
                 }

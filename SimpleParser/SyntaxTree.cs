@@ -51,29 +51,29 @@ internal class SyntaxTree{
                 readPosition--;
                 continue;
             }
-            if(parent.Data == null){//base case empty tree root node
+            if(parent.Data == null){//base case, empty tree root node
                 parent.Data = GetToken();
+                BuildTree(parent);
+            }
+            else if(parent.Right == null){
                 parent.Right = new Node(){
                     Data = GetToken()
                 };
+                if(parent.Right.Data.Name == "Operator"){
+                    BuildTree(parent.Right);
+                }
+            }
+            else if(parent.Left == null){
                 parent.Left = new Node(){
                     Data = GetToken()
                 };
+                if(parent.Left.Data.Name == "Operator"){
+                    BuildTree(parent.Left);
+                }
+                
             }
-            else{//non root node
-                parent.Right = new Node(){
-                    Data = GetToken()
-                };
-                parent.Left = new Node(){
-                    Data = GetToken()
-                };
-            }
-            //expand if children are not leafs, Token.Name == "Operator"
-            if(parent.Right.Data.Name.Equals("Operator")){
-                BuildTree(parent.Right);
-            }
-            if(parent.Left.Data.Name.Equals("Operator")){
-                BuildTree(parent.Left);
+            else{
+                return;
             }
         }
 
@@ -89,30 +89,42 @@ internal class SyntaxTree{
     }
 
     private void Optimize(Node node){
+        //establish operator order
+        OptimizeMultAndDiv(node);
+        OptimizeAddAndSub(node);
+    }
+
+    private void OptimizeMultAndDiv(Node node){
         //if node with both leafs with number execute operation
         if(node.Left.Data.Name == "Operator"){
-            Optimize(node.Left);
+            OptimizeMultAndDiv(node.Left);
         }
         if(node.Right.Data.Name == "Operator"){
-            Optimize(node.Right);
+            OptimizeMultAndDiv(node.Right);
         }
         if(node.Left.Data.Name == "Num" && node.Right.Data.Name == "Num"){//both are leaf nodes
-            ExecuteOperation(node);
+            ExecuteMultOrDiv(node);
         }
     }
 
-    private void ExecuteOperation(Node node){
+    private void OptimizeAddAndSub(Node node){
+        //if node with both leafs with number execute operation
+        if(node.Left.Data.Name == "Operator"){
+            OptimizeAddAndSub(node.Left);
+        }
+        if(node.Right.Data.Name == "Operator"){
+            OptimizeAddAndSub(node.Right);
+        }
+        if(node.Left.Data.Name == "Num" && node.Right.Data.Name == "Num"){//both are leaf nodes
+            ExecuteAddOrSub(node);
+        }
+    }
+
+    private void ExecuteMultOrDiv(Node node){
         int left = int.Parse(node.Left.Data.Value);
         int right = int.Parse(node.Right.Data.Value);
-        if(node.Data.Value == "+"){
-            int value = left + right;
-            node.Data.Value = value.ToString();
-        }
-        else if(node.Data.Value == "-"){
-            int value = left - right;
-            node.Data.Value = value.ToString();
-        }
-        else if(node.Data.Value == "*"){
+        
+        if(node.Data.Value == "*"){
             int value = left * right;
             node.Data.Value = value.ToString();
         }
@@ -124,6 +136,23 @@ internal class SyntaxTree{
                 int value = left / right;
                 node.Data.Value = value.ToString();
             }
+        }
+        //updating node
+        node.Data.Name = "Num";
+        node.Left= null;
+        node.Right = null;
+    }
+
+    private void ExecuteAddOrSub(Node node){
+        int left = int.Parse(node.Left.Data.Value);
+        int right = int.Parse(node.Right.Data.Value);
+        if(node.Data.Value == "+"){
+            int value = left + right;
+            node.Data.Value = value.ToString();
+        }
+        else if(node.Data.Value == "-"){
+            int value = left - right;
+            node.Data.Value = value.ToString();
         }
         //updating node
         node.Data.Name = "Num";
