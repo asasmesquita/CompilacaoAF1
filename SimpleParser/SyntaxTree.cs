@@ -132,7 +132,12 @@ internal class SyntaxTree{
     }
 
 
-    internal void PrintTree(Node node){
+    private void PrintTree(Node node){
+        if(node.Data.Name != "Operator"){//one leaf tree
+            TreeString += node.Data.Value;
+            return;
+        }
+        
         if(node.Left.Data.Name == "Operator"){//next node is not a leaf
             PrintTree(node.Left);
         }

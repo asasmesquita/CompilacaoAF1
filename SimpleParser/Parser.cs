@@ -13,6 +13,8 @@ class Parser{
             lookahead = _streamReader.Read();
         }
         _symbolTable = symbolTable;
+
+        Expression();
     }
 
     internal void Expression(){

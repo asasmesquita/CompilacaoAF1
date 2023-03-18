@@ -9,13 +9,10 @@ class Program{
                         StreamReader reader = new StreamReader(stream);
                         SymbolTable symbolTable = new();
                         Parser parser = new Parser(reader, symbolTable);
-                        parser.Expression();
-                        Console.WriteLine();
-                        Console.WriteLine("Parsing operation terminated with success");
-                        Console.WriteLine();
+                        Console.WriteLine(": - Parsing operation terminated with success");
                         SyntaxTree syntaxTree = new SyntaxTree(parser.parsedText);
-                        Console.WriteLine(syntaxTree.TreeString);
-                        Console.WriteLine("Syntax analysis operation terminated with success");
+                        Console.Write(syntaxTree.TreeString);
+                        Console.WriteLine(": - Syntax analysis operation terminated with success");
                     }
                     catch(Exception e){
                         Console.WriteLine("Error: cannot open file");
