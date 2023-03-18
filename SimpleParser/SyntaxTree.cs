@@ -19,6 +19,8 @@ internal class SyntaxTree{
         BuildTree(_root);
 
         Optimize(_root);
+
+        PrintTree(_root);
     }
 
     private Token GetToken(){
@@ -145,24 +147,6 @@ internal class SyntaxTree{
             TreeString += node.Right.Data.Value + " ";
         }
         TreeString += node.Data.Value + " ";
-    }
-    internal void PrintTree(){
-        Node node = _root;
-        if(node.Left.Data.Name == "Operator"){
-            PrintTree(node.Left);
-        }
-        else{
-            TreeString += node.Left.Data.Value + " ";
-        }
-
-        if(node.Right.Data.Name == "Operator"){
-            PrintTree(node.Right);
-        }
-        else{
-            TreeString += node.Right.Data.Value + " ";
-        }
-        TreeString += node.Data.Value + " ";
-        
     }
 
 }

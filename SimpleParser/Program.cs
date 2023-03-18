@@ -14,7 +14,6 @@ class Program{
                         Console.WriteLine("Parsing operation terminated with success");
                         Console.WriteLine();
                         SyntaxTree syntaxTree = new SyntaxTree(parser.parsedText);
-                        syntaxTree.PrintTree();
                         Console.WriteLine(syntaxTree.TreeString);
                         Console.WriteLine("Syntax analysis operation terminated with success");
                     }
