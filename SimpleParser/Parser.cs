@@ -72,7 +72,7 @@ class Parser{
             _symbolTable.Table.Add(t);
             //Console.Write(t.Name + "." + t.Value + " ");
             Console.Write(t.Value + " ");
-            parsedText += t.Value + " ";
+            parsedText += t.Name + "." + t.Value + " ";
         }
         else if(Char.IsDigit((char)lookahead)){//num
             string value = string.Empty;
@@ -88,7 +88,7 @@ class Parser{
             _symbolTable.Table.Add(t);
             //Console.Write(t.Name + "." + t.Value + " ");
             Console.Write(t.Value + " ");
-            parsedText += t.Value + " ";
+            parsedText += t.Name + "." + t.Value + " ";
         }
         else if(lookahead == '('){
             Match('(');
