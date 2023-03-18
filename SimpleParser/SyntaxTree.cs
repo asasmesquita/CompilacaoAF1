@@ -18,7 +18,7 @@ internal class SyntaxTree{
         
         BuildTree(_root);
 
-        Optimize(_root);
+        Optimize();
 
         PrintTree(_root);
     }
@@ -88,63 +88,89 @@ internal class SyntaxTree{
         }
     }
 
-    private void Optimize(Node node){
-        //establish operator order
-        OptimizeMultAndDiv(node);
-        OptimizeAddAndSub(node);
+    private void Optimize(){
+        if(_root.Left == null && _root.Right == null){
+            return;
+        }
+        else{
+            //establish operator order
+            OptimizeMultAndDiv(_root);
+            OptimizeAddAndSub(_root);
+        }
     }
 
     private void OptimizeMultAndDiv(Node node){
         //if node with both leafs with number execute operation
-        if(node.Left.Data.Name == "Operator"){
-            OptimizeMultAndDiv(node.Left);
+        if(node.Right != null && node.Data.Value == "/" && node.Right.Data.Value == "0"){//to cope with word / 0 use case
+            throw new Exception("Division by Zero");
         }
-        if(node.Right.Data.Name == "Operator"){
+        if(node.Left != null && node.Right != null){
+            if(node.Left.Data.Name == "Num" && node.Right.Data.Name == "Num"){//both are leaf nodes
+                if(node.Data.Value == "*" || node.Data.Value == "/"){
+                    ExecuteMultOrDiv(node);
+                }       
+            }
+        }
+        
+        if(node.Right != null && node.Right.Data.Name == "Operator"){
             OptimizeMultAndDiv(node.Right);
         }
-        if(node.Left.Data.Name == "Num" && node.Right.Data.Name == "Num"){//both are leaf nodes
-            ExecuteMultOrDiv(node);
+        if(node.Left != null && node.Left.Data.Name == "Operator"){
+            OptimizeMultAndDiv(node.Left);
         }
+        
+        
     }
 
     private void OptimizeAddAndSub(Node node){
         //if node with both leafs with number execute operation
-        if(node.Left.Data.Name == "Operator"){
-            OptimizeAddAndSub(node.Left);
+        if(node.Left != null && node.Right != null && node.Left.Data.Name == "Num" && node.Right.Data.Name == "Num"){//both are leaf nodes
+            if(node.Data.Value == "+" || node.Data.Value == "-"){
+                ExecuteAddOrSub(node);
+            }
         }
-        if(node.Right.Data.Name == "Operator"){
+        if(node.Right != null && node.Right.Data.Name == "Operator"){
             OptimizeAddAndSub(node.Right);
         }
-        if(node.Left.Data.Name == "Num" && node.Right.Data.Name == "Num"){//both are leaf nodes
-            ExecuteAddOrSub(node);
+        if(node.Left != null && node.Left.Data.Name == "Operator"){
+            OptimizeAddAndSub(node.Left);
         }
+        
     }
 
     private void ExecuteMultOrDiv(Node node){
-        int left = int.Parse(node.Left.Data.Value);
-        int right = int.Parse(node.Right.Data.Value);
-        
-        if(node.Data.Value == "*"){
-            int value = left * right;
-            node.Data.Value = value.ToString();
-        }
-        else if(node.Data.Value == "/"){
-            if(right == 0){
-                throw new Exception("Division by Zero");
+        if(node.Left != null && node.Right != null){
+            int left = 0;
+            int right = 0;
+            if(node.Right != null && node.Left != null){
+                left = int.Parse(node.Left.Data.Value);
+                right = int.Parse(node.Right.Data.Value);
             }
-            else{
-                int value = left / right;
+            if(node.Data.Value == "*"){
+                int value = left * right;
                 node.Data.Value = value.ToString();
             }
+            else if(node.Data.Value == "/"){
+                if(right == 0){
+                    throw new Exception("Division by Zero");
+                }
+                else{
+                    int value = left / right;
+                    node.Data.Value = value.ToString();
+                }
+            }
+            //updating node
+            node.Data.Name = "Num";
+            node.Left= null;
+            node.Right = null;
+            //call on any modification of tree
+            Optimize();
         }
-        //updating node
-        node.Data.Name = "Num";
-        node.Left= null;
-        node.Right = null;
     }
 
     private void ExecuteAddOrSub(Node node){
-        int left = int.Parse(node.Left.Data.Value);
+        if(node.Left != null && node.Right != null){
+            int left = int.Parse(node.Left.Data.Value);
         int right = int.Parse(node.Right.Data.Value);
         if(node.Data.Value == "+"){
             int value = left + right;
@@ -158,6 +184,8 @@ internal class SyntaxTree{
         node.Data.Name = "Num";
         node.Left= null;
         node.Right = null;
+        Optimize();
+        }
     }
 
 
@@ -167,18 +195,22 @@ internal class SyntaxTree{
             return;
         }
         
-        if(node.Left.Data.Name == "Operator"){//next node is not a leaf
+        if(node.Left != null && node.Left.Data.Name == "Operator"){//next node is not a leaf
             PrintTree(node.Left);
         }
         else{
-            TreeString += node.Left.Data.Value + " ";
+            if(node.Left != null){
+                TreeString += node.Left.Data.Value + " ";
+            }
         }
 
-        if(node.Right.Data.Name == "Operator"){//next node is not a leaf
+        if(node.Right != null && node.Right.Data.Name == "Operator"){//next node is not a leaf
             PrintTree(node.Right);
         }
         else{
-            TreeString += node.Right.Data.Value + " ";
+            if(node.Right != null){
+                TreeString += node.Right.Data.Value + " ";
+            }
         }
         TreeString += node.Data.Value + " ";
     }
